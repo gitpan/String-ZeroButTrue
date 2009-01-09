@@ -3,7 +3,7 @@ package String::ZeroButTrue;
 use strict;
 use warnings;
 
-$String::ZeroButTrue::VERSION = '0.1';
+$String::ZeroButTrue::VERSION = '0.2';
 
 use base 'Exporter';
 @String::ZeroButTrue::EXPORT      = qw(get_zero_but_true is_zero_but_true);
@@ -31,7 +31,8 @@ sub is_zero_but_true {
     # no warnings 'numeric'; # string might *be* a string == Argument "$string" isn't numeric in numeric eq (==) at ...
     # return 1 if defined $string && $string && $string == 0;
     
-    return 1 if defined $string && $string && ($string eq '0e0' || $string eq '0E0' || $string eq '0 but true');
+    $string =~ tr/A-Z/a-z/;
+    return 1 if defined $string && $string && ($string eq '0e0' || $string eq '0 but true');
     return;
 }
 
@@ -41,11 +42,11 @@ __END__
 
 =head1 NAME
 
-String::ZeroButTrue - utils for consistent zero-but-true useage
+String::ZeroButTrue - utils for consistent zero-but-true usage
 
 =head1 VERSION
 
-This document describes String::ZeroButTrue version 0.1
+This document describes String::ZeroButTrue version 0.2
 
 =head1 SYNOPSIS
 
@@ -55,7 +56,7 @@ This document describes String::ZeroButTrue version 0.1
     if (is_zero_but_true($rc)) {
         # act on zero but true $rc
     }
-    elsif {
+    elsif($rc) {
         # act on otherwise true $rc 
     }
     else {
@@ -123,6 +124,10 @@ No bugs have been reported.
 Please report any bugs or feature requests to
 C<bug-string-zerobuttrue@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org>.
+
+=head1 SEE ALSO
+
+L<Return::DataButBool> and L<Contextual::Return>
 
 =head1 AUTHOR
 
